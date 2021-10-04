@@ -1,13 +1,13 @@
-const express = require("express");
 const bcrpyt = require("bcrypt");
-const router = express.Router();
 const db = require("../db/db.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const auth = require('../auth/auth.js');
+const auth = require("../auth/auth.js");
 
-/* GET users listing. */
-router.post("/register", async function (req, res, next) {
+
+//REGISTER *****************
+
+const REGISTER = async (req, res, next) => {
   const { username, password } = req.body;
   let error = [];
   var strongRegex = new RegExp(
@@ -36,9 +36,11 @@ router.post("/register", async function (req, res, next) {
         )
         .then((id) => res.send(id))
     : res.send(error);
-});
+};
 
-router.post("/login", async (req, res, next) => {
+//LOGIN **********************
+
+const LOGIN = async (req, res, next) => {
   const { username, password } = req.body;
   let user;
   if (username && password) {
@@ -53,7 +55,7 @@ router.post("/login", async (req, res, next) => {
 
         res.cookie("token", token, { httpOnly: true });
 
-        res.sendStatus(200)
+        res.sendStatus(200);
       } else {
         res.send("Password is incorrect!");
       }
@@ -63,10 +65,9 @@ router.post("/login", async (req, res, next) => {
   } else {
     res.send("Please fill inputs correctly.");
   }
-});
+};
 
-router.get('/test', auth, (req, res, next) => {
-  res.send(req.user);
-})
-
-module.exports = router;
+module.exports = {
+    REGISTER,
+    LOGIN
+}

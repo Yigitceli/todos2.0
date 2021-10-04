@@ -26,9 +26,12 @@ export default function Register(props) {
     <div className="limiter">
       <div className="container-login100 bg">
         <div className="wrap-login100">
-          <form className="login100-form validate-form">
+          <form
+            className="login100-form validate-form"
+            autoComplete="new-password"
+          >
             <span className="login100-form-title p-b-34 p-t-27 py-3">
-              Log in
+              Register
             </span>
 
             <div className="wrap-input100">
@@ -37,8 +40,9 @@ export default function Register(props) {
                 type="text"
                 name="username"
                 placeholder="Username"
+                autoComplete="new-password"
                 onChange={(e) => setUsername(e.target.value.trim())}
-                value={username}                            
+                value={username}
               />
               <span
                 className="focus-input100"
@@ -54,9 +58,7 @@ export default function Register(props) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value.trim())}
                 placeholder="Password"
-                autoComplete='new-password'
-                
-                
+                autoComplete="new-password"
               />
               <span
                 className="focus-input100"
@@ -72,13 +74,13 @@ export default function Register(props) {
                 value={passwordVerify}
                 onChange={(e) => setPasswordVerify(e.target.value.trim())}
                 placeholder="Password"
-                
+                autoComplete="new-password"
               />
               <span
                 className="focus-input100"
                 data-placeholder="&#xf191;"
               ></span>
-            </div>            
+            </div>
 
             <div className="container-login100-form-btn">
               <button className="login100-form-btn">Login</button>
