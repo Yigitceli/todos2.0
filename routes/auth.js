@@ -4,16 +4,25 @@ const router = express.Router();
 const db = require("../db/db.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const auth = require('../auth/auth.js');
-const {REGISTER, LOGIN} = require('../controllers/authControllers.js');
+const auth = require("../auth/auth.js");
+const {
+  REGISTER,
+  LOGIN,
+  LOGOUT,
+  ISAUTHENTICATED,
+} = require("../controllers/authControllers.js");
 
 // AUTH SECTION
+
+//POST
 router.post("/register", REGISTER);
 
 router.post("/login", LOGIN);
 
-router.get('/test', auth, (req, res, next) => {
-  res.send(req.user);
-})
+//GET
+
+router.get("/logout", auth, LOGOUT);
+
+router.get("/is-authenticated", auth, ISAUTHENTICATED);
 
 module.exports = router;

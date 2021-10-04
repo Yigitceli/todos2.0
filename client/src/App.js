@@ -1,4 +1,5 @@
 import Auth from "./components/Auth";
+import Cookies from 'js-cookie';
 import "./App.css";
 
 function App() {

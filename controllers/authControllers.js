@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const auth = require("../auth/auth.js");
 
-
 //REGISTER *****************
 
 const REGISTER = async (req, res, next) => {
@@ -67,7 +66,29 @@ const LOGIN = async (req, res, next) => {
   }
 };
 
+// LOGOUT **********
+
+const LOGOUT = async (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  res.cookie("token", "", { maxAge: 1 }); 
+  await db('token_blacklist').insert({token_id:token});
+  res.sendStatus(200);
+};
+
+//ISAUTHENTICATED ***********
+
+const ISAUTHENTICATED = (req, res) => {
+  console.log(req.user);
+  if (req.user) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+};
+
 module.exports = {
-    REGISTER,
-    LOGIN
-}
+  REGISTER,
+  LOGIN,
+  LOGOUT,
+  ISAUTHENTICATED,
+};
