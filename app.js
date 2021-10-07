@@ -7,23 +7,24 @@ require("dotenv").config();
 var indexRouter = require("./routes/index");
 var authRouter = require("./routes/auth");
 var app = express();
+const cors = require("cors");
 
 // view engine setup
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(cookieParser());
 
-app.use("/api", indexRouter);
 app.use("/auth", authRouter);
+app.use("/api", indexRouter);
 
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -37,7 +38,7 @@ app.use(function (err, req, res, next) {
 });
 
 const server = app.listen(process.env.PORT || 3001, () => {
-  console.log("SERVER LISTENING AT" + (process.env.PORT || 3001));
+  console.log("SERVER LISTENING AT " + (process.env.PORT || 3001));
 });
 
 module.exports = app;

@@ -6,5 +6,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTableIfExist('token_blacklist');  
+    return knex.schema.dropTableIfExists('token_blacklist');  
 };

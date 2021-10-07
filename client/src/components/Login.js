@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { logIn } from "../store/userReducer";
 import "./Login.css";
 
 export default function Login(props) {
-  const { setLogin } = props;
-
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [className1, setClassName1] = useState("input100");
@@ -18,11 +19,19 @@ export default function Login(props) {
       : setClassName2("input100");
   }, [username, password]);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    dispatch(logIn({ username, password }));
+  };
+
   return (
     <div className="limiter">
       <div className="container-login100 bg">
         <div className="wrap-login100">
-          <form className="login100-form validate-form">
+          <form
+            className="login100-form validate-form"
+            onSubmit={submitHandler}
+          >
             <span className="login100-form-title p-b-34 p-t-27 py-3">
               Log in
             </span>
@@ -80,7 +89,7 @@ export default function Login(props) {
             </div>
 
             <div className="text-center p-t-90">
-              <button className="txt1" onClick={() => setLogin(false)}>
+              <button className="txt1" onClick={submitHandler}>
                 <u>You don't have an account?</u>
               </button>
             </div>

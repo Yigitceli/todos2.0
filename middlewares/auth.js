@@ -4,22 +4,26 @@ require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
-    if (!req.headers.authorization) {
-      res.send("Security header is necessary.");
+    if (!req.cookies.token) {     
+      
+      res.status(401).send("You are not authorized.");
     }
-    const token = req.headers.authorization.split(" ")[1];
+    console.log('TEST') 
+    const token = req.cookies.token;
+
     const check = await db("token_blacklist").where({ token_id: token });
+
     if (check.length <= 0) {
       jwt.verify(token, process.env.SECRET, (err, info) => {
         if (err) {
-          res.send("You are not authorized.");
+          res.status(401).send("You are not authorized.");
         }
         req.user = info.data;
+
         next();
       });
     } else {
-      
-      res.send("You are not authorized.");
+      res.status(401).send("You are not authorized.");
     }
   } catch (error) {
     next(error);

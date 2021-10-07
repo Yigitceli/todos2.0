@@ -2,7 +2,7 @@ const bcrpyt = require("bcrypt");
 const db = require("../db/db.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const auth = require("../auth/auth.js");
+const auth = require("../middlewares/auth.js");
 
 //REGISTER *****************
 
@@ -44,6 +44,7 @@ const LOGIN = async (req, res, next) => {
   let user;
   if (username && password) {
     user = await db("users").where({ username });
+
     if (user.length !== 0) {
       if (bcrpyt.compareSync(password, user[0].password)) {
         const token = await jwt.sign(
@@ -53,34 +54,37 @@ const LOGIN = async (req, res, next) => {
         );
 
         res.cookie("token", token, { httpOnly: true });
-
-        res.sendStatus(200);
+        const { password, ...info } = user[0];
+        res.send(info);
       } else {
-        res.send("Password is incorrect!");
+        res.status(401).send("Password is incorrect!");
       }
     } else {
-      res.send("Username does not exist!");
+      res.status(401).send("Username does not exist!");
     }
   } else {
-    res.send("Please fill inputs correctly.");
+    res.status(401).send("Please fill inputs correctly.");
   }
 };
 
 // LOGOUT **********
 
 const LOGOUT = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  res.cookie("token", "", { maxAge: 1 }); 
-  await db('token_blacklist').insert({token_id:token});
-  res.sendStatus(200);
+  try {
+    const token = req.cookies.token;
+    res.cookie("token", "", { maxAge: 1 });
+    await db("token_blacklist").insert({ token_id: token });
+    res.status(200).send(true);
+  } catch (error) {
+    res.send(false);
+  }
 };
 
 //ISAUTHENTICATED ***********
 
 const ISAUTHENTICATED = (req, res) => {
-  console.log(req.user);
   if (req.user) {
-    res.send(true);
+    res.send(req.user);
   } else {
     res.send(false);
   }
