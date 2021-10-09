@@ -4,7 +4,7 @@ exports.up = async function(knex) {
         table.increments('id').primary();
         table.string('username').notNullable().unique();
         table.string('password').notNullable();
-        table.boolean('isAdmin').default('false');
+        table.boolean('isAdmin').default('false');        
         table.timestamps(true, true);      
     })
   };

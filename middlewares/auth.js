@@ -4,11 +4,9 @@ require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
-    if (!req.cookies.token) {     
-      
+    if (!req.cookies.token) {
       res.status(401).send("You are not authorized.");
     }
-    console.log('TEST') 
     const token = req.cookies.token;
 
     const check = await db("token_blacklist").where({ token_id: token });
@@ -18,6 +16,7 @@ const auth = async (req, res, next) => {
         if (err) {
           res.status(401).send("You are not authorized.");
         }
+
         req.user = info.data;
 
         next();

@@ -2,7 +2,7 @@ const bcrpyt = require("bcrypt");
 const db = require("../db/db.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const auth = require("../middlewares/auth.js");
+
 
 //REGISTER *****************
 
@@ -48,13 +48,15 @@ const LOGIN = async (req, res, next) => {
     if (user.length !== 0) {
       if (bcrpyt.compareSync(password, user[0].password)) {
         const token = await jwt.sign(
-          { data: { username, id: user[0].id, isAdmin: user[0].isAdmin } },
+          { data: { username, id: user[0].id, isAdmin: user[0].isAdmin} },
           process.env.SECRET,
           { expiresIn: "1h" }
         );
 
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, { httpOnly: true });    
+          
         const { password, ...info } = user[0];
+        
         res.send(info);
       } else {
         res.status(401).send("Password is incorrect!");

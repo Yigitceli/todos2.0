@@ -5,12 +5,14 @@ export const checkIsAuthenticated = createAsyncThunk(
   "isAuthenticated",
   async (thunkAPI) => {
     const { data } = await axios.get("/auth/is-authenticated");
+    console.log(data)
     return data;
   }
 );
 
 export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
   const { data } = await axios.post("/auth/login", userData);
+  console.log(data)
   return data;
 });
 
@@ -25,6 +27,7 @@ const userSlice = createSlice({
     username: "",
     isAdmin: false,
     id: null,
+    profilPicture: null,
     isAuthenticated: false,
     isLoading: false,
     isError: false,
@@ -36,13 +39,14 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(checkIsAuthenticated.fulfilled, (state, action) => {
-      const { username, id, isAdmin } = action.payload;
+      const { username, id, isAdmin} = action.payload;
       state.username = username;
       state.id = id;
       state.isAdmin = isAdmin;
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
+      state.profilPicture = 'api/user/image';
     });
     builder.addCase(checkIsAuthenticated.rejected, (state, action) => {
       state.isLoading = false;
@@ -54,13 +58,14 @@ const userSlice = createSlice({
     });
     builder.addCase(logIn.fulfilled, (state, action) => {
       console.log(action.payload);      
-      const { username, id, isAdmin } = action.payload;
+      const { username, id, isAdmin} = action.payload;
       state.username = username;
       state.id = id;
       state.isAdmin = isAdmin;
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
+      state.profilPicture = 'api/user/image';
     });
     builder.addCase(logIn.rejected, (state, action) => {
       state.isLoading = false;

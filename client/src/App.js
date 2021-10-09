@@ -2,7 +2,7 @@ import Auth from "./components/Auth";
 import "./App.css";
 
 import { useEffect} from "react";
-import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
 import { useDispatch, useSelector } from "react-redux";
 import { checkIsAuthenticated } from "./store/userReducer";
 
@@ -23,7 +23,7 @@ function App() {
       ) : !isAuthenticated ? (
         <Auth />
       ) : (
-        <Dashboard />
+        <Home />
       )}
     </div>
   );

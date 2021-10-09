@@ -1,14 +1,15 @@
 const router = require("express").Router();
-const imageUpload = require("../middlewares/multer.js");
+const upload = require("../multer.js");
+const db = require("../db/db.js");
+const auth = require("../middlewares/auth.js");
+const { UPLOAD_IMAGE, GET_IMAGE } = require("../controllers/userControllers.js");
 
-router.get("/:userId", (req, res, next) => {
-    
+router.get("/image", auth, GET_IMAGE);
+router.get("/me", auth, async (req, res, next) => {
+  res.send(req.user);
 });
 
-router.post(
-  "/:userId/upload",
-  imageUpload.single("image"),
-  (req, res, next) => {}
-);
+
+router.put("/me/image", auth, upload.single("image"), UPLOAD_IMAGE);
 
 module.exports = router;
