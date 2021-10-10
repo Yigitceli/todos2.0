@@ -10,10 +10,9 @@
   box-shadow: 0px 0px 8px #fff;
   border-radius: 25px;
   margin-right: 2%;
-  align-items: center;  
+  align-items: center;
   padding: 1% 0;
   flex-direction: column;
- 
 }
 .todos {
   margin-left: 2%;
@@ -21,7 +20,36 @@
   box-shadow: 0px 0px 8px #fff;
   border-radius: 25px;
 }
-.create{
-    cursor: pointer;
-    height: 0;
+.create {
+  cursor: pointer;
+  height: 0;
+}
+.fill {
+  color: white;  
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 50px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.fill::after {
+  content: "";
+  background-color: #000000;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
 }

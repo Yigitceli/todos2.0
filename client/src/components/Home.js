@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import Navbar from "./Navbar";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function Home() {
   const [file, setFile] = useState(null);
@@ -27,7 +28,7 @@ export default function Home() {
   };*/
 
   return (
-    <div className='h-100'>
+    <div className="h-100">
       <Navbar />
       <Dashboard />
     </div>

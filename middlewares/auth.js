@@ -4,7 +4,9 @@ require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
+    
     if (!req.cookies.token) {
+      
       res.status(401).send("You are not authorized.");
     }
     const token = req.cookies.token;

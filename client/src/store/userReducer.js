@@ -4,20 +4,28 @@ import axios from "axios";
 export const checkIsAuthenticated = createAsyncThunk(
   "isAuthenticated",
   async (thunkAPI) => {
-    const { data } = await axios.get("/auth/is-authenticated");
-    console.log(data)
+    const { data } = await axios.get(
+      "http://localhost:3001/auth/is-authenticated",
+      { withCredentials: true }
+    );
     return data;
   }
 );
 
 export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
-  const { data } = await axios.post("/auth/login", userData);
-  console.log(data)
+  const { data } = await axios.post(
+    "http://localhost:3001/auth/login",
+    userData,
+    { withCredentials: true }
+  );
+
   return data;
 });
 
 export const logOut = createAsyncThunk("logOut", async (thunkAPI) => {
-  const { data } = await axios.get("/auth/logout");
+  const { data } = await axios.get("http://localhost:3001/auth/logout", {
+    withCredentials: true,
+  });
   return data;
 });
 
@@ -39,14 +47,14 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(checkIsAuthenticated.fulfilled, (state, action) => {
-      const { username, id, isAdmin} = action.payload;
+      const { username, id, isAdmin } = action.payload;
       state.username = username;
       state.id = id;
       state.isAdmin = isAdmin;
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
-      state.profilPicture = 'api/user/image';
+      state.profilPicture = "http://localhost:3001/api/user/image";
     });
     builder.addCase(checkIsAuthenticated.rejected, (state, action) => {
       state.isLoading = false;
@@ -57,15 +65,15 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(logIn.fulfilled, (state, action) => {
-      console.log(action.payload);      
-      const { username, id, isAdmin} = action.payload;
+      console.log(action.payload);
+      const { username, id, isAdmin } = action.payload;
       state.username = username;
       state.id = id;
       state.isAdmin = isAdmin;
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
-      state.profilPicture = 'api/user/image';
+      state.profilPicture = "http://localhost:3001/api/user/image";
     });
     builder.addCase(logIn.rejected, (state, action) => {
       state.isLoading = false;
