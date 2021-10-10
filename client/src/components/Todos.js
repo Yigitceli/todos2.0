@@ -19,9 +19,17 @@ export default function Todos(props) {
       {isLoading ? (
         <h1>LOADING</h1>
       ) : todos.length <= 0 ? (
-        <h1 className="h-100 w-100 d-flex justify-content-center align-items-center">
-          TODOS is empty
-        </h1>
+        <div className="h-100 w-100 d-flex justify-content-center align-items-center flex-column">
+          <h1  className="w-100 d-flex justify-content-center align-items-center" style={{height:'85%'}}>
+            TODOS is empty
+          </h1>
+          <button
+            className="bn632-hover bn24 w-75"
+            onClick={() => setShowModal(true)}
+          >
+            Add TODO
+          </button>
+        </div>
       ) : (
         <>
           <h1 style={{ textAlign: "center" }} className="py-3">
