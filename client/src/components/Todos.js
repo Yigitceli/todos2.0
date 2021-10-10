@@ -20,7 +20,10 @@ export default function Todos(props) {
         <h1>LOADING</h1>
       ) : todos.length <= 0 ? (
         <div className="h-100 w-100 d-flex justify-content-center align-items-center flex-column">
-          <h1  className="w-100 d-flex justify-content-center align-items-center" style={{height:'85%'}}>
+          <h1
+            className="w-100 d-flex justify-content-center align-items-center"
+            style={{ height: "85%" }}
+          >
             TODOS is empty
           </h1>
           <button
@@ -36,7 +39,7 @@ export default function Todos(props) {
             {todos[0].name}
           </h1>
           <div className="p-4" style={{ height: "80%" }}>
-            <ul className="p-0 d-flex justify-content-between flex-wrap">
+            <ul className="p-0 h-100 d-flex flex-wrap justify-content-between">
               {todos.map((item) => (
                 <TodoCard key={item.id} data={item} />
               ))}
