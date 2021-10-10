@@ -1,9 +1,11 @@
 .dashboard {
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 92%;
   background-image: url("../images/pexels-photo-3745234.jpeg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
-  height: 90%;
+  background-size: cover;  
 }
 .sidebar {
   width: 20%;

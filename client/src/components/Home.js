@@ -4,6 +4,8 @@ import Dashboard from "./Dashboard";
 import Navbar from "./Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+
+
 export default function Home() {
   const [file, setFile] = useState(null);
 
@@ -26,10 +28,11 @@ export default function Home() {
       console.log(error);
     }
   };*/
+  
 
   return (
-    <div className="h-100">
-      <Navbar />
+    <div className="h-100">      
+      <Navbar />      
       <Dashboard />
     </div>
   );

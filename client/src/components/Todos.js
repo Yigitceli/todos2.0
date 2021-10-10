@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { fetchTodos } from "../store/todosReducer";
 import TodoCard from "./TodoCard";
 
-export default function Todos() {
+export default function Todos(props) {
+  const { setShowModal } = props;
   const { categoryId } = useParams();
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos.todos);
@@ -28,14 +28,19 @@ export default function Todos() {
             {todos[0].name}
           </h1>
           <div className="p-4" style={{ height: "80%" }}>
-            <ul className="p-0">
+            <ul className="p-0 d-flex justify-content-between flex-wrap">
               {todos.map((item) => (
-                <TodoCard key={item.id} data={item}/>
+                <TodoCard key={item.id} data={item} />
               ))}
             </ul>
           </div>
-          <div className='w-100 text-center'>
-            <button className="bn632-hover bn24 w-75">Add TODO</button>
+          <div className="w-100 text-center" style={{ height: "fill" }}>
+            <button
+              className="bn632-hover bn24 w-75"
+              onClick={() => setShowModal(true)}
+            >
+              Add TODO
+            </button>
           </div>
         </>
       )}

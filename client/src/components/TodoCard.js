@@ -12,7 +12,12 @@ export default function TodoCard(props) {
         // to use toggle method like this.flippy.toggle()
         // if you pass isFlipped prop component will be controlled component.
         // and other props, which will go to div
-        style={{ width: "19rem", height: "14rem" }} /// these are optional style, it is not necessary
+        style={{
+          width: "300px",
+          height: "250px",
+          cursor: "pointer",
+          margin: "20px",
+        }} /// these are optional style, it is not necessary
       >
         <FrontSide
           style={{
@@ -27,10 +32,12 @@ export default function TodoCard(props) {
           style={{ backgroundColor: "#f3ca20", color: "#000000" }}
           className="p-3 d-flex flex-column"
         >
-          <div style={{height: "80%", marginBottom:"1em"}}>
-            <p style={{color: "#000000"}}>{data.description}</p>
+          <div style={{ height: "80%", marginBottom: "1em" }}>
+            <p style={{ color: "#000000" }}>{data.description}</p>
           </div>
-          <button type="button" class="fill">Fill</button>
+          <button type="button" className="fill">
+            Complete
+          </button>
         </BackSide>
       </Flippy>
     </>

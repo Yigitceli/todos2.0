@@ -7,9 +7,22 @@ export const fetchTodos = createAsyncThunk(
     const { data } = await axios.get(
       `http://localhost:3001/api/todos/${categoryId}`,
       { withCredentials: true }
-    );       
-    
+    );
+
     return data;
+  }
+);
+
+export const submitTodo = createAsyncThunk(
+  "submitTodo",
+  async ({ categoryId, todoData }, thunkAPI) => {
+    const { data } = await axios.post(
+      `http://localhost:3001/api/todos/${categoryId}`,
+      todoData,
+      { withCredentials: true }
+    );
+
+    return data[0];
   }
 );
 
@@ -28,13 +41,22 @@ const todosSlice = createSlice({
     });
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
       state.todos = action.payload;
-      state.isError = false; 
+      state.isError = false;
       state.isLoading = false;
     });
     builder.addCase(fetchTodos.rejected, (state, action) => {
       state.isError = true;
       state.isLoading = false;
       state.todos = null;
+    });
+
+    builder.addCase(submitTodo.fulfilled, (state, action) => {
+      state.todos = [...state.todos, action.payload];
+      state.isError = false;
+      state.isLoading = false;
+    });
+    builder.addCase(submitTodo.rejected, (state, action) => {
+      state.isError = true;
     });
   },
 });

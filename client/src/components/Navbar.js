@@ -12,7 +12,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-dark bg-dark">
+    <nav className="navbar navbar-dark bg-dark" style={{height:'8%'}}>
       <div className="container-fluid">
         <div className="d-flex profile-container">
           <img src={profilPicture} alt="pp" className="profil-picture" />

@@ -10,11 +10,23 @@ router.get("/categories", auth, async (req, res, next) => {
 
 router.get("/:categoryId", auth, async (req, res, next) => {
   const todos = await db
-    .select("todos.todo_title", "todos.description", "categories.name", "todos.id")
+    .select(
+      "todos.todo_title",
+      "todos.description",
+      "categories.name",
+      "todos.id"
+    )
     .from("todos")
     .leftJoin("categories", "todos.category_id", "categories.id")
     .where({ category_id: req.params.categoryId });
   res.send(todos);
+});
+
+// POST
+
+router.post("/:categoryId", auth, async (req, res, next) => {
+  const response = await db("todos").insert(req.body, ["*"]);
+  res.send(response);
 });
 
 router.post("/categories", auth, async (req, res, next) => {
