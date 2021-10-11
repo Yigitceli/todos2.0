@@ -2,9 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../store/userReducer";
 import "./Navbar.css";
-import { NavDropdown } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const {setShowProfilModal} = props;
+  
   const profilPicture = useSelector((state) => state.user.profilPicture);
   const dispatch = useDispatch();
   const clickHandler = () => {
@@ -16,22 +18,7 @@ export default function Navbar() {
       <div className="container-fluid">
         <div className="d-flex profile-container">
           <img src={profilPicture} alt="pp" className="profil-picture" />
-          <NavDropdown
-            id="nav-dropdown-dark"
-            title="Menu"
-            menuVariant="dark"
-            
-          >
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
-          </NavDropdown>
+          <Nav.Link onClick={() => setShowProfilModal(true)}>Change Profil Photo</Nav.Link>
         </div>
 
         <p className="navbar-brand">TODOS</p>

@@ -12,6 +12,23 @@ export const checkIsAuthenticated = createAsyncThunk(
   }
 );
 
+export const updateProfilPicture = createAsyncThunk(
+  "updateProfilPicture",
+  async (fd, thunkAPI) => {
+    const { data } = await axios.put(
+      `http://localhost:3001/api/user/me/image`,
+      fd,
+      {
+        withCredentials: true,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
+    return data;
+  }
+);
+
 export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
   const { data } = await axios.post(
     "http://localhost:3001/auth/login",
@@ -94,6 +111,9 @@ const userSlice = createSlice({
     builder.addCase(logOut.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
+    });
+    builder.addCase(updateProfilPicture.fulfilled, (state, action) => {
+      state.profilPicture = "http://localhost:3001/api/user/image";
     });
   },
 });

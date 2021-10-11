@@ -1,17 +1,29 @@
-import React from "react";
+import { useRef } from "react";
 import Flippy, { FrontSide, BackSide } from "react-flippy";
 
 export default function TodoCard(props) {
   const { data } = props;
+  const buttonRef = useRef();
+  const cardRef = useRef();
+
+  const clickHandler = (e) => {
+    if (!buttonRef.current.contains(e.target)) {
+      cardRef.current.toggle();            
+    } else {           
+      
+    }
+  };
   return (
     <>
-      <Flippy
+      <Flippy      
         flipOnHover={false} // default false
-        flipOnClick={true} // default false
+        flipOnClick={false}
+        onClick={clickHandler} // default false
         flipDirection="horizontal" // horizontal or vertical
         // to use toggle method like this.flippy.toggle()
         // if you pass isFlipped prop component will be controlled component.
         // and other props, which will go to div
+        ref={cardRef}
         style={{
           width: "300px",
           height: "250px",
@@ -35,7 +47,7 @@ export default function TodoCard(props) {
           <div style={{ height: "80%", marginBottom: "1em" }}>
             <p style={{ color: "#000000" }}>{data.description}</p>
           </div>
-          <button type="button" className="fill">
+          <button type="button" className="fill" ref={buttonRef}>
             Complete
           </button>
         </BackSide>

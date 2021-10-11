@@ -4,9 +4,7 @@ require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
-    
     if (!req.cookies.token) {
-      
       res.status(401).send("You are not authorized.");
     }
     const token = req.cookies.token;
@@ -16,9 +14,10 @@ const auth = async (req, res, next) => {
     if (check.length <= 0) {
       jwt.verify(token, process.env.SECRET, (err, info) => {
         if (err) {
+          
           res.status(401).send("You are not authorized.");
         }
-
+        
         req.user = info.data;
 
         next();

@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import Navbar from "./Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ProfilModla from "./ProfilModla";
 
 
 
 export default function Home() {
-  const [file, setFile] = useState(null);
+  
+  const [showProfilModal, setShowProfilModal] = useState(false);
 
   /*const saveFile = (e) => {
     setFile(e.target.files[0]);
@@ -32,7 +34,8 @@ export default function Home() {
 
   return (
     <div className="h-100">      
-      <Navbar />      
+      <Navbar setShowProfilModal={setShowProfilModal}/>  
+      {showProfilModal && <ProfilModla setShowProfilModal={setShowProfilModal}/>}
       <Dashboard />
     </div>
   );
