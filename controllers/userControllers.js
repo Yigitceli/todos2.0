@@ -5,8 +5,7 @@ const path = require("path");
 const UPLOAD_IMAGE = async (req, res, next) => {
   try {    
     res.sendStatus(204);  
-  } catch (error) {
-    
+  } catch (error) {    
     res.status(401).send("Invalid file ext.");
   }
 };

@@ -21,7 +21,8 @@ export const postCategory = createAsyncThunk(
       { categoryName },
       { withCredentials: true }
     );
-    return data;
+
+    return data[0];
   }
 );
 

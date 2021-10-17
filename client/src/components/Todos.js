@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchTodos } from "../store/todosReducer";
-import TodoCard from "./TodoCard";
+import Filter from "./Filter";
+
+
+import "react-multi-carousel/lib/styles.css";
+import TodosCarousel from "./TodosCarousel";
+
 
 export default function Todos(props) {
   const { setShowModal } = props;
@@ -10,10 +15,12 @@ export default function Todos(props) {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos.todos);
   const isLoading = useSelector((state) => state.todos.isLoading);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     dispatch(fetchTodos(categoryId));
   }, [dispatch, categoryId]);
+
   return (
     <div className="todos bg-light">
       {isLoading ? (
@@ -39,12 +46,10 @@ export default function Todos(props) {
             {todos[0].name}
           </h1>
           <div className="p-4" style={{ height: "80%" }}>
-            <ul className="p-0 h-100 d-flex flex-wrap justify-content-between">
-              {todos.map((item) => (
-                <TodoCard key={item.id} data={item} />
-              ))}
-            </ul>
+            <Filter setFilter={setFilter} />
+            <TodosCarousel todos={todos} filter={filter} />
           </div>
+
           <div className="w-100 text-center" style={{ height: "fill" }}>
             <button
               className="bn632-hover bn24 w-75"
@@ -58,3 +63,16 @@ export default function Todos(props) {
     </div>
   );
 }
+/*
+                {
+                  all: todos.map((item) => (
+                    <TodoCard key={item.id} data={item} />
+                  )),
+                  completed: todos
+                    .filter((item) => item.is_complete === true)
+                    .map((item) => <TodoCard key={item.id} data={item} />),
+                  unCompleted: todos
+                    .filter((item) => item.is_complete === false)
+                    .map((item) => <TodoCard key={item.id} data={item} />),
+                }[filter]
+              */

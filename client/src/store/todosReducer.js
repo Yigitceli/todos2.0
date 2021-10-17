@@ -26,6 +26,19 @@ export const submitTodo = createAsyncThunk(
   }
 );
 
+export const toggleTodo = createAsyncThunk(
+  "togleTodo",
+  async ({ todoId, isComplete }, thunkAPI) => {
+    const { data } = await axios.put(
+      `http://localhost:3001/api/todos/${parseInt(todoId)}`,
+      { isComplete },
+      { withCredentials: true }
+    );
+    console.log(data[0]);
+    return data[0];
+  }
+);
+
 const todosSlice = createSlice({
   name: "todos",
   initialState: {
@@ -57,6 +70,14 @@ const todosSlice = createSlice({
     });
     builder.addCase(submitTodo.rejected, (state, action) => {
       state.isError = true;
+    });
+    builder.addCase(toggleTodo.fulfilled, (state, action) => {
+      const todoIndex = state.todos.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.todos[todoIndex].is_complete = action.payload.is_complete;
+      state.isError = false;
+      state.isLoading = false;
     });
   },
 });

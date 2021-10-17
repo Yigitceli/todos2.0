@@ -1,11 +1,11 @@
-import axios from "axios";
+
 import React, { useState } from "react";
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfilPicture } from "../store/userReducer";
+import { updateProfilPicture } from "../store/profilPictureReducer";
 
 export default function ProfilModla(props) {
-  const image = useSelector((state) => state.user.profilPicture);
+  const image = useSelector((state) => state.profilPicture.profilPicture);
   const [file, setFile] = useState(null);
   const { setShowProfilModal } = props;
   const profilModalRef = useRef();
@@ -15,20 +15,19 @@ export default function ProfilModla(props) {
     setFile(e.target.files[0]);
   };
 
-  
+  useEffect(() => {
+    if (file) {
+      const fd = new FormData();
+      fd.append("image", file);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const fd = new FormData();    
-    fd.append("image", file);
-
-    try {
-      dispatch(updateProfilPicture(fd));
-      setFile(null);
-    } catch (error) {
-      console.log(error);
+      try {
+        dispatch(updateProfilPicture(fd));
+        setFile(null);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  };
+  }, [file, dispatch]);
 
   useEffect(() => {
     const closeModal = (e) => {
@@ -50,11 +49,7 @@ export default function ProfilModla(props) {
         onClick={() => setShowProfilModal(false)}
       ></i>
       <div className="todo-modal">
-        <form
-          className="todo-form py-5"
-          ref={profilModalRef}
-          onSubmit={submitHandler}
-        >
+        <form className="todo-form py-5" ref={profilModalRef}>
           <div className="text-center">
             <img
               src={image}
@@ -70,7 +65,6 @@ export default function ProfilModla(props) {
               onChange={uploadFile}
             />
           </div>
-          <button type="submit">Submit</button>
         </form>
       </div>
     </div>

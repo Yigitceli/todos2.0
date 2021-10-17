@@ -4,6 +4,7 @@ import { logIn } from "../store/userReducer";
 import "./Login.css";
 
 export default function Login(props) {
+  const { setLogin } = props;
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -89,7 +90,7 @@ export default function Login(props) {
             </div>
 
             <div className="text-center p-t-90">
-              <button className="txt1" onClick={submitHandler}>
+              <button className="txt1" onClick={() => setLogin(false)}>
                 <u>You don't have an account?</u>
               </button>
             </div>

@@ -37,6 +37,8 @@ export default function TodoModal(props) {
         },
       })
     );
+    setTodoDescription("");
+    setTodoTitle("");
   };
 
   return (

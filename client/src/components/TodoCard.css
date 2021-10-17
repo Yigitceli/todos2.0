@@ -1,0 +1,28 @@
+.todo-card {
+  width: 320px;
+  height: 250px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .todo-card {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .todo-card h5 {
+    font-size: 0.8em;
+  }
+  .todo-card p {
+    font-size: 0.6em;
+  }
+  .todo-card button {
+    font-size: 0.6em;
+    display: flex;
+    justify-content: center;
+  }
+ 
+}

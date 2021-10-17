@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getProfilPicture } from "./profilPictureReducer";
 
 export const checkIsAuthenticated = createAsyncThunk(
   "isAuthenticated",
@@ -9,23 +10,7 @@ export const checkIsAuthenticated = createAsyncThunk(
       { withCredentials: true }
     );
     return data;
-  }
-);
-
-export const updateProfilPicture = createAsyncThunk(
-  "updateProfilPicture",
-  async (fd, thunkAPI) => {
-    const { data } = await axios.put(
-      `http://localhost:3001/api/user/me/image`,
-      fd,
-      {
-        withCredentials: true,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }
-    );
-    return data;
+    
   }
 );
 
@@ -36,6 +21,7 @@ export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
     { withCredentials: true }
   );
 
+  thunkAPI.dispatch(getProfilPicture());
   return data;
 });
 
@@ -54,7 +40,7 @@ const userSlice = createSlice({
     id: null,
     profilPicture: null,
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: true,
     isError: false,
   },
   reducers: {},
@@ -71,7 +57,6 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
-      state.profilPicture = "http://localhost:3001/api/user/image";
     });
     builder.addCase(checkIsAuthenticated.rejected, (state, action) => {
       state.isLoading = false;
@@ -82,7 +67,6 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(logIn.fulfilled, (state, action) => {
-      console.log(action.payload);
       const { username, id, isAdmin } = action.payload;
       state.username = username;
       state.id = id;
@@ -90,7 +74,6 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.isAuthenticated = true;
-      state.profilPicture = "http://localhost:3001/api/user/image";
     });
     builder.addCase(logIn.rejected, (state, action) => {
       state.isLoading = false;
@@ -111,9 +94,6 @@ const userSlice = createSlice({
     builder.addCase(logOut.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-    });
-    builder.addCase(updateProfilPicture.fulfilled, (state, action) => {
-      state.profilPicture = "http://localhost:3001/api/user/image";
     });
   },
 });

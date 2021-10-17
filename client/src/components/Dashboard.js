@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "./Sidebar";
 import Todos from "./Todos";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TodosPlaceholder from "./TodosPlaceholder";
 import TodoModal from "./TodoModal";
 
 export default function Dashboard(props) {
+  const { setShowProfilModal } = props;
   const [showModal, setShowModal] = useState(false);
   return (
     <div className="dashboard d-flex py-3">
       <Router>
-        <Sidebar />
+        <Sidebar setShowProfilModal={setShowProfilModal} />
 
         <Switch>
           <Route exact path={"/"}>
