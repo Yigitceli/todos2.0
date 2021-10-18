@@ -54,7 +54,7 @@ const profilPictureSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.profilPicture = null;
-      state.isNull = false;
+      state.isNull = true;
     });
   },
 });

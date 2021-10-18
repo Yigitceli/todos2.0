@@ -10,7 +10,6 @@ export const checkIsAuthenticated = createAsyncThunk(
       { withCredentials: true }
     );
     return data;
-    
   }
 );
 
@@ -60,7 +59,6 @@ const userSlice = createSlice({
     });
     builder.addCase(checkIsAuthenticated.rejected, (state, action) => {
       state.isLoading = false;
-      state.isError = true;
     });
     builder.addCase(logIn.pending, (state, action) => {
       state.isError = false;

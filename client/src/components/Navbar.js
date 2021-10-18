@@ -5,6 +5,7 @@ import "./Navbar.css";
 import { Nav } from "react-bootstrap";
 import Avatar from "boring-avatars";
 import { getProfilPicture } from "../store/profilPictureReducer";
+import { useHistory } from "react-router";
 
 export default function Navbar(props) {
   const { setShowProfilModal } = props;
@@ -12,9 +13,11 @@ export default function Navbar(props) {
   const profilPicture = useSelector(
     (state) => state.profilPicture.profilPicture
   );
+  const history = useHistory(); 
   const dispatch = useDispatch();
   const clickHandler = () => {
     dispatch(logOut());
+    history.push("/");
   };
   useEffect(() => {
     dispatch(getProfilPicture());

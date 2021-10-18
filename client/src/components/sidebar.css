@@ -82,9 +82,9 @@
 
 .show {
   left: 0rem;
-  transition: 0.3s linear;
+  transition: 0.15s linear;
 }
 .hidden {
   left: -14.4rem;
-  transition: 0.3s linear;
+  transition: 0.15s linear;
 }

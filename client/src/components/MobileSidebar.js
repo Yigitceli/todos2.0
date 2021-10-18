@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Categories from "./Categories";
 import { fetchCategories, postCategory } from "../store/categoriesReducer";
@@ -6,17 +6,32 @@ import "./sidebar.css";
 import { logOut } from "../store/userReducer";
 import Avatar from "boring-avatars";
 import { Nav } from "react-bootstrap";
+import { useHistory } from "react-router";
 
 export default function MobileSidebar(props) {
   const isNull = useSelector((state) => state.profilPicture.isNull);
   const profilPicture = useSelector(
     (state) => state.profilPicture.profilPicture
   );
+  const history = useHistory();
   const { setShowProfilModal } = props;
   const [formShow, setFormShow] = useState(false);
   const [categoryName, setCategoyName] = useState("");
   const dispatch = useDispatch();
   const [showSideBar, setShowSideBar] = useState(false);
+  const navbarRef = useRef();
+
+  useEffect(() => {
+    const closeNavbar = (e) => {
+      if (!navbarRef.current.contains(e.target)) {
+        setShowSideBar(false);
+      }
+    };
+    document.addEventListener("mousedown", closeNavbar);
+    return () => {
+      document.removeEventListener("mousedown", closeNavbar);
+    };
+  }, [setShowSideBar]);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -30,6 +45,7 @@ export default function MobileSidebar(props) {
 
   const clickHandler = () => {
     dispatch(logOut());
+    history.push("/");
   };
 
   const toggleShowSidebar = () => {
@@ -43,6 +59,7 @@ export default function MobileSidebar(props) {
             ? "d-flex mobile-container hidden"
             : "d-flex mobile-container show"
         }
+        ref={navbarRef}
       >
         <div className="bg-white d-flex mobile">
           <div style={{ height: "95%" }}>
@@ -52,6 +69,7 @@ export default function MobileSidebar(props) {
                 name="Maria Mitchell"
                 variant="marble"
                 colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+                style={{ borderRadius: "50%" }}
               />
             ) : (
               <img
@@ -105,7 +123,17 @@ export default function MobileSidebar(props) {
             borderRadius: "0 25px 25px 0",
           }}
         >
-          {!showSideBar ? <i className="fas fa-angle-double-right fs-2" style={{ color: "white" }}></i> :  <i className="fas fa-angle-double-left fs-2" style={{ color: "white" }}></i>}
+          {!showSideBar ? (
+            <i
+              className="fas fa-angle-double-right fs-2"
+              style={{ color: "white" }}
+            ></i>
+          ) : (
+            <i
+              className="fas fa-angle-double-left fs-2"
+              style={{ color: "white" }}
+            ></i>
+          )}
         </div>
       </div>
     </>

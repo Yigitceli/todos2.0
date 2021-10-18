@@ -1,14 +1,37 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { signUp } from "../store/userReducer";
 
 export default function Register(props) {
   const { setLogin } = props;
-
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVerify, setPasswordVerify] = useState("");
   const [className1, setClassName1] = useState("input100");
   const [className2, setClassName2] = useState("input100");
   const [className3, setClassName3] = useState("input100");
+  const [errors, setErrors] = useState([]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setErrors([]);
+    if (password !== passwordVerify) {
+      setErrors((prev) => [...prev, "Passwords do not match!"]);
+    } else {
+      const { data } = await axios.post(
+        "http://localhost:3001/auth/register",
+        { username, password },
+        { withCredentials: true }
+      );
+      setErrors((prev) => [...prev, ...data]);
+      console.log(errors);
+      setUsername("");
+      setPassword("");
+      setPasswordVerify("");
+    }
+  };
 
   useEffect(() => {
     username.length !== 0
@@ -29,6 +52,7 @@ export default function Register(props) {
           <form
             className="login100-form validate-form"
             autoComplete="new-password"
+            onSubmit={submitHandler}
           >
             <span className="login100-form-title p-b-34 p-t-27 py-3">
               Register
@@ -83,13 +107,22 @@ export default function Register(props) {
             </div>
 
             <div className="container-login100-form-btn">
-              <button className="login100-form-btn">Login</button>
+              <button className="login100-form-btn" type="submit">
+                Sign Up
+              </button>
             </div>
 
             <div className="text-center p-t-90">
               <button className="txt1" onClick={() => setLogin(true)}>
                 <u>You have an account?</u>
               </button>
+            </div>
+            <div>
+              <ul className='my-2 text-center '>
+                {errors.map((element, index) => {
+                  return <li className='p-1 fs-6' style={{fontWeight:'bolder', color:'white', borderBottom:'solid 1px white'}} key={index}>{element}</li>;
+                })}
+              </ul>
             </div>
           </form>
         </div>

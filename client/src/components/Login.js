@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../store/userReducer";
 import "./Login.css";
 
 export default function Login(props) {
   const { setLogin } = props;
   const dispatch = useDispatch();
+  const isError = useSelector((state) => state.user.isError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [className1, setClassName1] = useState("input100");
@@ -94,6 +95,7 @@ export default function Login(props) {
                 <u>You don't have an account?</u>
               </button>
             </div>
+            {isError && <p className='text-center fs-5' style={{fontWeight:'bolder', color:'white'}}>Username or Password is wrong!</p>}
           </form>
         </div>
       </div>
