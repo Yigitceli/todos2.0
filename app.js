@@ -14,9 +14,10 @@ const cors = require("cors");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ origin: "https://todos-yigit.herokuapp.com", credentials: true }));
+app.use(
+  cors({ origin: "https://todos-yigit.herokuapp.com", credentials: true })
+);
 app.use(cookieParser());
-
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
