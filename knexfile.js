@@ -1,7 +1,5 @@
 // Update with your config settings.
 require("dotenv").config();
-const path = require("path");
-console.log(path.join(__dirname, "db/migrations"));
 module.exports = {
   development: {
     client: "pg",
@@ -13,17 +11,17 @@ module.exports = {
     },
 
     migrations: {
-      directory: path.join(__dirname, "db/migrations"),
+      directory: "./db/migrations",
     },
     seeds: {
-      directory: path.join(__dirname, "/db/seeds/dev"),
+      directory: "./db/seeds/dev",
     },
   },
   production: {
     client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: path.join(__dirname, "db/migrations"),
+      directory: "./db/migrations",
     },
     seeds: {
       directory: "./db/seeds/dev",
