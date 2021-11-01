@@ -5,7 +5,7 @@ export const fetchTodos = createAsyncThunk(
   "fetchTodos",
   async (categoryId, thunkAPI) => {
     const { data } = await axios.get(
-      `http://localhost:3001/api/todos/${categoryId}`,
+      `https://todos-yigit.herokuapp.com/api/todos/${categoryId}`,
       { withCredentials: true }
     );
 
@@ -17,7 +17,7 @@ export const submitTodo = createAsyncThunk(
   "submitTodo",
   async ({ categoryId, todoData }, thunkAPI) => {
     const { data } = await axios.post(
-      `http://localhost:3001/api/todos/${categoryId}`,
+      `https://todos-yigit.herokuapp.com/api/todos/${categoryId}`,
       todoData,
       { withCredentials: true }
     );
@@ -30,7 +30,7 @@ export const toggleTodo = createAsyncThunk(
   "togleTodo",
   async ({ todoId, isComplete }, thunkAPI) => {
     const { data } = await axios.put(
-      `http://localhost:3001/api/todos/${parseInt(todoId)}`,
+      `https://todos-yigit.herokuapp.com/api/todos/${parseInt(todoId)}`,
       { isComplete },
       { withCredentials: true }
     );

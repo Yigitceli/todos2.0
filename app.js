@@ -14,7 +14,7 @@ const cors = require("cors");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "https://todos-yigit.herokuapp.com", credentials: true }));
 app.use(cookieParser());
 
 

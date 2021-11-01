@@ -6,7 +6,7 @@ export const checkIsAuthenticated = createAsyncThunk(
   "isAuthenticated",
   async (thunkAPI) => {
     const { data } = await axios.get(
-      "http://localhost:3001/auth/is-authenticated",
+      "https://todos-yigit.herokuapp.com/auth/is-authenticated",
       { withCredentials: true }
     );
     return data;
@@ -15,7 +15,7 @@ export const checkIsAuthenticated = createAsyncThunk(
 
 export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
   const { data } = await axios.post(
-    "http://localhost:3001/auth/login",
+    "https://todos-yigit.herokuapp.com/auth/login",
     userData,
     { withCredentials: true }
   );
@@ -25,7 +25,7 @@ export const logIn = createAsyncThunk("logIn", async (userData, thunkAPI) => {
 });
 
 export const logOut = createAsyncThunk("logOut", async (thunkAPI) => {
-  const { data } = await axios.get("http://localhost:3001/auth/logout", {
+  const { data } = await axios.get("https://todos-yigit.herokuapp.com/auth/logout", {
     withCredentials: true,
   });
   return data;

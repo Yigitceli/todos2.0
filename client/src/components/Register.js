@@ -21,7 +21,7 @@ export default function Register(props) {
       setErrors((prev) => [...prev, "Passwords do not match!"]);
     } else {
       const { data } = await axios.post(
-        "http://localhost:3001/auth/register",
+        "https://todos-yigit.herokuapp.com/auth/register",
         { username, password },
         { withCredentials: true }
       );

@@ -4,7 +4,7 @@ import axios from "axios";
 export const getProfilPicture = createAsyncThunk(
   "getProfilPicture",
   async (thunkAPI) => {
-    const { data } = await axios.get("http://localhost:3001/api/user/image", {
+    const { data } = await axios.get("https://todos-yigit.herokuapp.com/api/user/image", {
       withCredentials: true,
     });
     return data;
@@ -15,7 +15,7 @@ export const updateProfilPicture = createAsyncThunk(
   "updateProfilPicture",
   async (fd, thunkAPI) => {
     const { data } = await axios.put(
-      `http://localhost:3001/api/user/me/image`,
+      `https://todos-yigit.herokuapp.com/api/user/me/image`,
       fd,
       {
         withCredentials: true,
@@ -47,7 +47,7 @@ const profilPictureSlice = createSlice({
     builder.addCase(getProfilPicture.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.profilPicture = "http://localhost:3001/api/user/image";
+      state.profilPicture = "https://todos-yigit.herokuapp.com/api/user/image";
       state.isNull = false;
     });
     builder.addCase(getProfilPicture.rejected, (state, action) => {

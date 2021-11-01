@@ -5,7 +5,7 @@ export const fetchCategories = createAsyncThunk(
   "fetchCategories",
   async (userId, thunkAPI) => {
     const { data } = await axios.get(
-      "http://localhost:3001/api/todos/categories",
+      "https://todos-yigit.herokuapp.com/api/todos/categories",
       { withCredentials: true }
     );
 
@@ -17,7 +17,7 @@ export const postCategory = createAsyncThunk(
   "postCategory",
   async (categoryName, thunkAPI) => {
     const { data } = await axios.post(
-      "http://localhost:3001/api/todos/categories",
+      "https://todos-yigit.herokuapp.com/api/todos/categories",
       { categoryName },
       { withCredentials: true }
     );
