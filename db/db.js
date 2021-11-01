@@ -1,4 +1,5 @@
 const config = require('../knexfile');
-const db = require('knex')(config.development);
+console.log(process.env.ENV);
+const db = require('knex')(process.env.ENV === `PRODUCTION` ? config.production : config.development);
 
 module.exports = db;
